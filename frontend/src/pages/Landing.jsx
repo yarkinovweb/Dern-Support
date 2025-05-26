@@ -205,7 +205,7 @@ const Landing = () => {
                 Get Started Today
                 <span className="btn-arrow">→</span>
               </Link>
-              <a href="tel:+1234567890" className="btn btn-outline btn-large">
+              <a href="tel:+998936728988" className="btn btn-outline btn-large">
                 📞 Call Now
               </a>
             </div>
@@ -223,20 +223,20 @@ const Landing = () => {
             <div className="contact-item">
               <div className="contact-icon">📞</div>
               <h3>Call Us</h3>
-              <p>+1 (234) 567-8900</p>
+              <p>+998 93 672 89 88</p>
             </div>
             <div className="contact-item">
               <div className="contact-icon">✉️</div>
               <h3>Email Us</h3>
-              <p>support@dern-support.com</p>
+              <p>dernsupport@gmail.com</p>
             </div>
             <div className="contact-item">
               <div className="contact-icon">📍</div>
               <h3>Visit Us</h3>
               <p>
-                123 Tech Street
+                Sergeli district
                 <br />
-                Digital City, DC 12345
+                
               </p>
             </div>
           </div>
