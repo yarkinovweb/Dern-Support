@@ -84,7 +84,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 connect().then(() => {
-  server.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+  server.listen(8002, () => {
+    console.log("Server running on");
   });
 });
