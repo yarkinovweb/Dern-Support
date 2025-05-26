@@ -55,7 +55,7 @@ const server = http.createServer(async (req, res) => {
     createRoles(req, res);
   } else if (url.startsWith("/api/service/send") && method === "POST") {
     const parts = url.split("/");
-    const serviceId = parts[3];
+    const serviceId = parts[4];
     if (!serviceId) {
       res.writeHead(400, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ error: "ID topilmadi" }));
@@ -66,13 +66,9 @@ const server = http.createServer(async (req, res) => {
     getAllServices(req, res);
   } else if (url === "/api/service-request/update" && method === "PUT") {
     updateService(req, res);
-  } else if (
-    url.startsWith("/api/service-request/set-status") &&
-    method === "PUT"
-  ) {
+  } else if (url.startsWith("/api/service-request/set-status") && method === "PUT") {
     const parts = url.split("/");
     const serviceId = parts[4];
-    console.log(serviceId)
     markAsInprogres(req, res, serviceId);
   } else if (url === "/api/components" && method === "POST") {
     createComponent(req, res);
