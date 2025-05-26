@@ -72,6 +72,7 @@ const server = http.createServer(async (req, res) => {
   ) {
     const parts = url.split("/");
     const serviceId = parts[4];
+    console.log(serviceId)
     markAsInprogres(req, res, serviceId);
   } else if (url === "/api/components" && method === "POST") {
     createComponent(req, res);
