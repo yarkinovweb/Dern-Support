@@ -19,12 +19,12 @@ import { getAllUsers } from "./handleRoutes/users.js";
 
 const server = http.createServer(async (req, res) => {
   const { url, method } = req;
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5174");
+  res.setHeader("Access-Control-Allow-Origin", "https://yarkinov.robohouse.tech");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
-      "Access-Control-Allow-Origin": "http://localhost:5174",
+      "Access-Control-Allow-Origin": "https://yarkinov.robohouse.tech",
       "Access-Control-Allow-Methods": "GET, POST,PUT, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     });
@@ -32,13 +32,13 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (url === "/auth/register" && method === "POST") {
+  if (url === "/api/auth/register" && method === "POST") {
     register(req, res);
-  } else if (url === "/auth/login" && method === "POST") {
+  } else if (url === "/api/auth/login" && method === "POST") {
     login(req, res);
-  } else if (url === "/auth/logout" && method === "POST") {
+  } else if (url === "/api/auth/logout" && method === "POST") {
     logout(req, res);
-  } else if (url === "/auth/current-user" && method === "GET") {
+  } else if (url === "/api/auth/current-user" && method === "GET") {
     const user = await getCurrentUser(req, res);
     if (!user) {
       sendJson(res, 401, { error: "Unauthorized" });
@@ -47,13 +47,13 @@ const server = http.createServer(async (req, res) => {
     const { password, ...userWithoutPassword } = user;
 
     return sendJson(res, 200, userWithoutPassword);
-  } else if (url === "/service/create" && method === "POST") {
+  } else if (url === "/api/service/create" && method === "POST") {
     createServiceRequest(req, res);
-  } else if (url === "/users" && method === "GET") {
+  } else if (url === "/api/users" && method === "GET") {
     getAllUsers(req, res);
-  } else if (url === "/stuff/create") {
+  } else if (url === "//apistuff/create") {
     createRoles(req, res);
-  } else if (url.startsWith("/service/send") && method === "POST") {
+  } else if (url.startsWith("/api/service/send") && method === "POST") {
     const parts = url.split("/");
     const serviceId = parts[3];
     if (!serviceId) {
@@ -61,21 +61,21 @@ const server = http.createServer(async (req, res) => {
       return res.end(JSON.stringify({ error: "ID topilmadi" }));
     }
     sendToMaster(req, res, serviceId);
-  } else if (url === "/service-request" && method === "GET") {
+  } else if (url === "/api/service-request" && method === "GET") {
     console.log("object");
     getAllServices(req, res);
-  } else if (url === "/service-request/update" && method === "PUT") {
+  } else if (url === "/api/service-request/update" && method === "PUT") {
     updateService(req, res);
   } else if (
-    url.startsWith("/service-request/set-status") &&
+    url.startsWith("/api/service-request/set-status") &&
     method === "PUT"
   ) {
     const parts = url.split("/");
     const serviceId = parts[3];
     markAsInprogres(req, res, serviceId);
-  } else if (url === "/components" && method === "POST") {
+  } else if (url === "/api/components" && method === "POST") {
     createComponent(req, res);
-  } else if (url === "/components" && method === "GET") {
+  } else if (url === "/api/components" && method === "GET") {
     getAllComponents(req, res);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });

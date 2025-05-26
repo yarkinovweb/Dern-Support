@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
             </nav>
 
             <div className="user-info">
-              <span className={`badge badge-${user?.role}`}>{user?.role}</span>
+              <span className={`badge badge-${user?.firstName}`}>{user?.firstName}</span>
               <button onClick={handleLogout} className="btn btn-secondary">
                 <LogOut size={16} />
                 Logout

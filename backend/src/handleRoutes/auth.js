@@ -59,8 +59,8 @@ export async function login(req, res) {
       user: {
         id: user._id,
         email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
+        firstName: user.firstName,
+        lastName: user.lastName,
         role: user.role
       },
     }, token);

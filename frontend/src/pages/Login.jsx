@@ -23,7 +23,7 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setLoading(true)
 
     try {
