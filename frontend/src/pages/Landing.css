@@ -723,6 +723,14 @@
   color: #bdc3c7;
 }
 
+select{
+  padding: 15px 5px;
+  border: none;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   .container {
     padding: 0 30px;

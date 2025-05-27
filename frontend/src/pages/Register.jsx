@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import toast from "react-hot-toast"
-import { UserPlus } from "lucide-react"
+import './Landing.css'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,15 +13,29 @@ const Register = () => {
     firstName: "",
     lastName: "",
   })
+  const [isLegalEntity, setIsLegalEntity] = useState(false)
   const [loading, setLoading] = useState(false)
   const { register } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name === "isLegalEntity" || e.target.name === "address") {
+      if (e.target.name === "isLegalEntity") {
+        setFormData({
+          ...formData, isLegalEntity: e.target.value === "true" ? true : false
+        })
+      } else {
+        setFormData({
+          ...formData, address: e.target.value
+        })
+      }
+    }
+    else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      })
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -75,6 +89,32 @@ const Register = () => {
               required
             />
           </div>
+
+          <label className="form-label">Select Account Type</label>
+
+          <select className="form-group" name="isLegalEntity" onChange={(e) => {
+            setIsLegalEntity(e.target.value === "false" ? false : true)
+            handleChange(e)
+          }}>
+            <option value={false}>Individual</option>
+            <option value={true}>Business</option>
+          </select>
+
+          {
+            isLegalEntity && <div className="form-group">
+              <label className="form-label">Company Name</label>
+              <input
+                type="text"
+                name="companyName"
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+              <br /><br />
+              <label className="form-label">Company Address</label>
+              <input type="text" name="address" onChange={handleChange} className="form-input" required />
+            </div>
+          }
 
           <div className="form-group">
             <label className="form-label">Email</label>

@@ -7,14 +7,29 @@ import { sendJson } from "../utils/response.js";
 const users = db.collection("users");
 
 export async function register(req, res) {
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    isLegalEntity,
+    companyName,
+    address,
+  } = await handleRequest(req);
   try {
-    const { email, password, firstName, lastName } = await handleRequest(req);
-
     if (!email || !password || !firstName || !lastName)
-      return sendJson(res, 400, { error: "All fields must be filled in." });
+      return sendJson(res, 400, {
+        error: "All fields must be filled in.",
+      });
 
     if (await users.findOne({ email }))
-      return sendJson(res, 409, { error: "Already available email" });
+      return sendJson(res, 409, { error: "Already have this email" });
+
+    if (isLegalEntity)
+      if (!companyName || !address)
+        return sendJson(res, 400, {
+          error: "All fields must be filled in",
+        });
 
     const hashedPassword = await hashPassword(password);
     const result = await users.insertOne({
@@ -23,16 +38,24 @@ export async function register(req, res) {
       firstName,
       lastName,
       role: "user",
+      isLegalEntity,
+      address,
+      companyName,
       createdAt: new Date(),
     });
-
     const token = createToken({ id: result.insertedId });
 
-    sendJson(res, 201, {
-      message: "User registered successfully",
-      userId: result.insertedId,
-    }, token);
+    sendJson(
+      res,
+      201,
+      {
+        message: "User registered successfully",
+        userId: result.insertedId,
+      },
+      token
+    );
   } catch (err) {
+    console.log(err);
     sendJson(res, 500, { error: "Server error" });
   }
 }
@@ -54,16 +77,23 @@ export async function login(req, res) {
 
     const token = createToken({ id: user._id });
 
-    sendJson(res, 200, {
-      message: "Successfully logIn",
-      user: {
-        id: user._id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role
+    sendJson(
+      res,
+      200,
+      {
+        message: "Successfully logIn",
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          isLegalEntity: user.isLegalEntity,
+          companyName: user.companyName,
+        },
       },
-    }, token);
+      token
+    );
   } catch (err) {
     sendJson(res, 500, { error: "Server Error" });
   }
@@ -71,8 +101,8 @@ export async function login(req, res) {
 
 export function logout(req, res) {
   res.writeHead(200, {
-    'Set-Cookie': `token=; HttpOnly; Path=/; Max-Age=0`, 
-    'Content-Type': 'application/json'
+    "Set-Cookie": `token=; HttpOnly; Path=/; Max-Age=0`,
+    "Content-Type": "application/json",
   });
   res.end(JSON.stringify({ message: "Logged out successfully" }));
 }

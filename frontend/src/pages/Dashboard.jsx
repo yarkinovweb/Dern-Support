@@ -70,8 +70,8 @@ const Dashboard = () => {
     <div>
       <h1 style={{ marginBottom: "32px", color: "#1f2937" }}>Welcome back!</h1>
 
-      {user.role==='manager' || user.role==='master' && <div className="grid grid-2" style={{ marginBottom: "32px" }}>
-        
+      {user.role === 'manager' || user.role === 'master' && <div className="grid grid-2" style={{ marginBottom: "32px" }}>
+
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{ padding: "12px", backgroundColor: "#dbeafe", borderRadius: "8px" }}>
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
       </div>}
 
-      {user.role==="master" || user.role==='manager' && <div  className="card">
+      {user.role === "master" || user.role === 'manager' && <div className="card">
         <h2 style={{ marginBottom: "16px", color: "#1f2937" }}>Recent Services</h2>
         {recentServices.length > 0 ? (
           <table className="table">
@@ -155,13 +155,13 @@ const Dashboard = () => {
               ))}
             </tbody>
           </table>
-        ) : ( 
+        ) : (
           <p style={{ color: "#6b7280", textAlign: "center", padding: "20px" }}>No services found</p>
         )}
 
       </div>}
 
-      {user.role==="manager" && <div className="card">
+      {user.role === "manager" && <div className="card">
         <h2>Users list</h2>
         {users.length > 0 ? (
           <table className="table">
@@ -170,6 +170,8 @@ const Dashboard = () => {
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Email</th>
+                <th>Address</th>
+                <th>Role</th>
                 <th>Created date</th>
               </tr>
             </thead>
@@ -179,20 +181,22 @@ const Dashboard = () => {
                   <td>{user.firstName ?? "Not filled"}</td>
                   <td>{user.lastName ?? "Not filled"}</td>
                   <td>{user.email}</td>
+                  <td>{user.address ?? ""}</td>
+                  <td>{user.role}{user.isLegalEntity ? " Business" : ""}</td>
                   <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         )
-         : (
-          <p style={{ color: "#6b7280", textAlign: "center", padding: "20px" }}>No services found</p>
-        )}
-        <Analytics/>
+          : (
+            <p style={{ color: "#6b7280", textAlign: "center", padding: "20px" }}>No services found</p>
+          )}
+        <Analytics />
       </div>}
 
-      {user.role==='user' && <div>
-        <KnowledgeBase/>
+      {user.role === 'user' && <div>
+        <KnowledgeBase />
       </div>}
 
     </div>

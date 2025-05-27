@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: "https://yarkinov.robohouse.tech/api",
+  baseURL: "http://localhost:8002/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

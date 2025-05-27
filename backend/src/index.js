@@ -19,12 +19,12 @@ import { getAllUsers } from "./handleRoutes/users.js";
 
 const server = http.createServer(async (req, res) => {
   const { url, method } = req;
-  res.setHeader("Access-Control-Allow-Origin", "https://yarkinov.robohouse.tech");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3002");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
-      "Access-Control-Allow-Origin": "https://yarkinov.robohouse.tech",
+      "Access-Control-Allow-Origin": "http://localhost:3002",
       "Access-Control-Allow-Methods": "GET, POST,PUT, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     });
@@ -58,7 +58,7 @@ const server = http.createServer(async (req, res) => {
     const serviceId = parts[4];
     if (!serviceId) {
       res.writeHead(400, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify({ error: "ID topilmadi" }));
+      return res.end(JSON.stringify({ error: "ID not found" }));
     }
     sendToMaster(req, res, serviceId);
   } else if (url === "/api/service-request" && method === "GET") {
@@ -82,6 +82,6 @@ const server = http.createServer(async (req, res) => {
 
 connect().then(() => {
   server.listen(8002, () => {
-    console.log("Server running on");
+    console.log("Server running on", );
   });
 });
