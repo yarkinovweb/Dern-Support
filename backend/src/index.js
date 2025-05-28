@@ -19,12 +19,12 @@ import { getAllUsers } from "./handleRoutes/users.js";
 
 const server = http.createServer(async (req, res) => {
   const { url, method } = req;
-  res.setHeader("Access-Control-Allow-Origin", "http://yarkinov.robohouse.tech");
+  res.setHeader("Access-Control-Allow-Origin", "https://yarkinov.robohouse.tech");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
-      "Access-Control-Allow-Origin": "http://yarkinov.robohouse.tech",
+      "Access-Control-Allow-Origin": "https://yarkinov.robohouse.tech",
       "Access-Control-Allow-Methods": "GET, POST,PUT, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     });
