@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react"
-import api from "../services/api"
+import api, { BASE_URL } from "../services/api"
+import axios from "axios"
 
 const AuthContext = createContext()
 
@@ -40,12 +41,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await api.post("/auth/login",{email,password})
+      const response = await axios.post(BASE_URL + "/auth/login", { email, password })
       const userData = response.data.user
       setUser(userData)
       localStorage.setItem("user", JSON.stringify(userData))
       return { success: true }
     } catch (error) {
+      console.log(error)
       return {
         success: false,
         error: error.response?.data?.error || "Login failed",
@@ -55,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await api.post("/auth/register", userData)
+      const response = await axios.post(BASE_URL+"/auth/register", userData)
       return { success: true, data: response.data }
     } catch (error) {
       return {
